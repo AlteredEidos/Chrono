@@ -5,6 +5,14 @@ TagManager:
   serializedVersion: 2
   tags:
   - Pit
+  - Time
+  - Key
+  - Chest
+  - Water
+  - Sappling
+  - Tree
+  - Big Tree
+  - Alter
   layers:
   - Default
   - TransparentFX
