@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 1200
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -114,7 +114,196 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: ChronoTurningBlueSprites_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 2051
+        height: 2066
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 009a266e2963f0849a288509ee59369b
+      internalID: -827864951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChronoTurningBlueSprites_1
+      rect:
+        serializedVersion: 2
+        x: 2051
+        y: 0
+        width: 2051
+        height: 2066
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63661287569f78240aaceae1bc94e22f
+      internalID: 946947960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChronoTurningBlueSprites_2
+      rect:
+        serializedVersion: 2
+        x: 4102
+        y: 0
+        width: 2051
+        height: 2066
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f34e2a82d958bb84eb40d1304f289e68
+      internalID: 543407164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChronoTurningBlueSprites_3
+      rect:
+        serializedVersion: 2
+        x: 6153
+        y: 0
+        width: 2051
+        height: 2066
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c69a921f3c24de1429f88c2572fbfdd1
+      internalID: -1639335542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChronoTurningBlueSprites_4
+      rect:
+        serializedVersion: 2
+        x: 8204
+        y: 0
+        width: 2051
+        height: 2066
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d647319deaf309d4d905a92fd14f5ac3
+      internalID: -1755267533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChronoTurningBlueSprites_5
+      rect:
+        serializedVersion: 2
+        x: 10255
+        y: 0
+        width: 2051
+        height: 2066
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1259bc70950468d499eb0cdd95af7915
+      internalID: 1868512384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChronoTurningBlueSprites_6
+      rect:
+        serializedVersion: 2
+        x: 12306
+        y: 0
+        width: 2051
+        height: 2066
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e161289d9db19214a861f30622edf242
+      internalID: -508410201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChronoTurningBlueSprites_7
+      rect:
+        serializedVersion: 2
+        x: 14357
+        y: 0
+        width: 2051
+        height: 2066
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de60ded3afb8458488e2a952e58bfea0
+      internalID: 1508616077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ChronoTurningBlueSprites_8
+      rect:
+        serializedVersion: 2
+        x: 16408
+        y: 0
+        width: 2051
+        height: 2066
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4df0e79a9d9642f4db6c7deeff11fe74
+      internalID: 100620427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -125,7 +314,16 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      ChronoTurningBlueSprites_1: 946947960
+      ChronoTurningBlueSprites_5: 1868512384
+      ChronoTurningBlueSprites_3: -1639335542
+      ChronoTurningBlueSprites_0: -827864951
+      ChronoTurningBlueSprites_2: 543407164
+      ChronoTurningBlueSprites_6: -508410201
+      ChronoTurningBlueSprites_4: -1755267533
+      ChronoTurningBlueSprites_7: 1508616077
+      ChronoTurningBlueSprites_8: 100620427
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
