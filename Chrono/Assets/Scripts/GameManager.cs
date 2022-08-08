@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    int scene;
+    public int scene;
     public int activeTime;
     public bool box;
     public int keyCount;
@@ -19,6 +19,10 @@ public class GameManager : MonoBehaviour
     public GameObject chest;
     public GameObject openChest;
     public GameObject[] sappling;
+    public GameObject keyIcon;
+    public GameObject waterIcon;
+    public GameObject canIcon;
+    public GameObject music;
     GameObject player;
     public Animator transition;
 
@@ -43,9 +47,22 @@ public class GameManager : MonoBehaviour
         {
             sappling[sapplingNum].SetActive(true);
         }
-        if (scene != 0)
+        if (scene != 0 && scene != 3 && scene != 4)
         {
+            if (water == 1)
+            {
+                waterIcon.SetActive(true);
+            }
 
+            if (waterCan == 1)
+            {
+                canIcon.SetActive(true);
+            }
+
+            if (keyCount == 2 && waterCan != 1)
+            {
+                keyIcon.SetActive(true);
+            }
         }
         player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
@@ -148,5 +165,26 @@ public class GameManager : MonoBehaviour
         transition.SetTrigger("Start");
         yield return new WaitForSeconds(1);
         SceneManager.LoadScene(2);
+    }
+
+    public void GameOver()
+    {
+        StartCoroutine("Over");
+    }
+
+    IEnumerator Over()
+    {
+        transition.SetTrigger("Start");
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene(3);
+    }
+
+    IEnumerator Credits()
+    {
+        Debug.Log("ending");
+        yield return new WaitForSeconds(7);
+        transition.SetTrigger("Start");
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene(4);
     }
 }

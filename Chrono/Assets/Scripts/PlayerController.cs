@@ -78,6 +78,7 @@ public class PlayerController : MonoBehaviour
             {
                 gameManager.sapplingNum++;
                 gameManager.water = 0;
+                gameManager.waterIcon.SetActive(false);
             }
         }
 
@@ -93,6 +94,7 @@ public class PlayerController : MonoBehaviour
             {
                 gameManager.keyCount++;
                 gameManager.futureKey.SetActive(false);
+                gameManager.keyIcon.SetActive(true);
             }
         }
 
@@ -102,6 +104,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
             {
                 gameManager.water++;
+                gameManager.waterIcon.SetActive(true);
             }
         }
 
@@ -113,6 +116,8 @@ public class PlayerController : MonoBehaviour
                 gameManager.waterCan = 1;
                 gameManager.chest.SetActive(false);
                 gameManager.openChest.SetActive(true);
+                gameManager.keyIcon.SetActive(false);
+                gameManager.canIcon.SetActive(true);
             }
         }
 
@@ -123,6 +128,15 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
             {
                 gameManager.StartCoroutine("TimeTravel");
+            }
+        }
+
+        if (collision.gameObject.tag == "Big Tree")
+        {
+            active = true;
+            if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+            {
+                gameManager.GameOver();
             }
         }
 
