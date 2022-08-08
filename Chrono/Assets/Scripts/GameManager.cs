@@ -8,8 +8,17 @@ public class GameManager : MonoBehaviour
     int scene;
     public int activeTime;
     public bool box;
+    public int keyCount;
+    public int waterCan;
+    public int water;
+    public int sapplingNum;
 
     public GameObject[] timeLocations;
+    public GameObject pastKey;
+    public GameObject futureKey;
+    public GameObject chest;
+    public GameObject openChest;
+    public GameObject[] sappling;
     GameObject player;
     public Animator transition;
 
@@ -17,8 +26,29 @@ public class GameManager : MonoBehaviour
     {
         Load();
         scene = SceneManager.GetActiveScene().buildIndex;
+        if (keyCount != 0 && scene == 1)
+        {
+            pastKey.SetActive(false);
+        }
+        else if (keyCount == 1 && scene == 2)
+        {
+            futureKey.SetActive(true);
+        }
+        if (waterCan == 1 && scene == 1)
+        {
+            chest.SetActive(false);
+            openChest.SetActive(true);
+        }
+        if (sapplingNum != 0 && scene == 2)
+        {
+            sappling[sapplingNum].SetActive(true);
+        }
+        if (scene != 0)
+        {
+
+        }
         player = GameObject.FindGameObjectWithTag("Player");
-        if(player != null)
+        if (player != null)
         {
             player.transform.position = timeLocations[activeTime].transform.position;
         }
@@ -53,6 +83,10 @@ public class GameManager : MonoBehaviour
     void Load()
     {
         activeTime = PlayerPrefs.GetInt("active", 0);
+        keyCount = PlayerPrefs.GetInt("key", 0);
+        sapplingNum = PlayerPrefs.GetInt("sappling", 0);
+        water = PlayerPrefs.GetInt("water", 0);
+        waterCan = PlayerPrefs.GetInt("waterCan", 0);
         if (PlayerPrefs.GetInt("box", 0) == 1)
         {
             box = true;
@@ -62,20 +96,30 @@ public class GameManager : MonoBehaviour
     void Save()
     {
         PlayerPrefs.SetInt("active", activeTime);
+        PlayerPrefs.SetInt("key", keyCount);
+        PlayerPrefs.SetInt("sappling", sapplingNum);
+        PlayerPrefs.SetInt("water", water);
+        PlayerPrefs.SetInt("waterCan", waterCan);
         if (box == true)
         {
             PlayerPrefs.SetInt("box", 1);
         }
     }
 
-    void StartGame()
+    public void StartGame()
     {
-        transition.SetTrigger("Start");
         Save();
-        SceneManager.LoadScene(1);
+        StartCoroutine("Game");
     }
 
-    void EndGame()
+    IEnumerator Game()
+    {
+        transition.SetTrigger("Start");
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene(2);
+    }
+
+    public void EndGame()
     {
         Save();
         StartCoroutine("End");
@@ -88,11 +132,21 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
-    void NewGame()
+    public void NewGame()
     {
-        transition.SetTrigger("Start");
         PlayerPrefs.SetInt("active", 0);
         PlayerPrefs.SetInt("box", 0);
-        SceneManager.LoadScene(1);
+        PlayerPrefs.SetInt("key", 0);
+        PlayerPrefs.SetInt("sappling", 0);
+        PlayerPrefs.SetInt("water", 0);
+        PlayerPrefs.SetInt("waterCan", 0);
+        StartCoroutine("New");
+    }
+
+    IEnumerator New()
+    {
+        transition.SetTrigger("Start");
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene(2);
     }
 }

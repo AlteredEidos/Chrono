@@ -216,9 +216,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdbee1c6073bcc24094b4925b8118673, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  active: 0
   jump:
     serializedVersion: 2
     m_Bits: 1
+  anim: {fileID: 0}
   sprite: {fileID: 7049075993965848238}
   groundDetect: {fileID: 11241423}
   respawn: {fileID: 0}
@@ -235,7 +237,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.4490106}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -246,7 +248,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.5, y: 1}
+  m_Size: {x: 1.5, y: 1.898021}
   m_EdgeRadius: 0
 --- !u!50 &7837321340659171673
 Rigidbody2D:

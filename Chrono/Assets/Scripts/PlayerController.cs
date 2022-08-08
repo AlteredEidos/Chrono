@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     Vector3 lastPos;
     public bool active;
     int speed = 5;
-    int jumpForce = 8;
+    int jumpForce = 10;
     float groundDistance = 0.5f;
     public LayerMask jump;
 
@@ -62,11 +62,6 @@ public class PlayerController : MonoBehaviour
             playerRB.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
             Debug.Log("Jump");
         }
-
-        if (active == true && Input.GetKeyDown(KeyCode.UpArrow) || active == true && Input.GetKeyDown(KeyCode.W))
-        {
-            gameManager.StartCoroutine("TimeTravel");
-        }
     }
 
     void LateUpdate()
@@ -74,12 +69,61 @@ public class PlayerController : MonoBehaviour
         lastPos = transform.position;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
+        if (collision.gameObject.tag == "Sappling")
+        {
+            active = true;
+            if (gameManager.water == 1 && gameManager.sapplingNum < 3 && Input.GetKey(KeyCode.W) || gameManager.water == 1 && gameManager.sapplingNum < 3 && Input.GetKey(KeyCode.UpArrow))
+            {
+                gameManager.sapplingNum++;
+                gameManager.water = 0;
+            }
+        }
+
+        if (collision.gameObject.tag == "Key")
+        {
+            active = true;
+            if (gameManager.keyCount == 0 && Input.GetKey(KeyCode.W) || gameManager.keyCount == 0 && Input.GetKey(KeyCode.UpArrow))
+            {
+                gameManager.keyCount++;
+                gameManager.pastKey.SetActive(false);
+            }
+            else if (gameManager.keyCount == 1 && Input.GetKey(KeyCode.W) || gameManager.keyCount == 1 && Input.GetKey(KeyCode.UpArrow))
+            {
+                gameManager.keyCount++;
+                gameManager.futureKey.SetActive(false);
+            }
+        }
+
+        if (collision.gameObject.tag == "Water" && gameManager.waterCan == 1 && gameManager.water == 0)
+        {
+            active = true;
+            if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+            {
+                gameManager.water++;
+            }
+        }
+
+        if (collision.gameObject.tag == "Chest" && gameManager.keyCount == 2)
+        {
+            active = true;
+            if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+            {
+                gameManager.waterCan = 1;
+                gameManager.chest.SetActive(false);
+                gameManager.openChest.SetActive(true);
+            }
+        }
+
         if (collision.gameObject.tag == "Time")
         {
             gameManager.activeTime = int.Parse(collision.gameObject.name);
             active = true;
+            if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+            {
+                gameManager.StartCoroutine("TimeTravel");
+            }
         }
 
         if (collision.gameObject.tag == "Pit")
@@ -90,6 +134,31 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (collision.gameObject.tag == "Time")
+        {
+            active = false;
+        }
+
+        if (collision.gameObject.tag == "Key")
+        {
+            active = false;
+        }
+
+        if (collision.gameObject.tag == "Chest")
+        {
+            active = false;
+        }
+
+        if (collision.gameObject.tag == "Water")
+        {
+            active = false;
+        }
+
+        if (collision.gameObject.tag == "Sappling")
+        {
+            active = false;
+        }
+
         if (collision.gameObject.tag == "Time")
         {
             active = false;
