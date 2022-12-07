@@ -33,8 +33,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //animations
-        anim.SetFloat("Speed", Mathf.Abs(playerRB.velocity.x));
-
         if (playerRB.velocity.x > turnSensitivity)
         {
             sprite.flipX = false;
@@ -50,6 +48,7 @@ public class PlayerController : MonoBehaviour
         velocity = playerRB.velocity;
         velocity.x = Input.GetAxisRaw("Horizontal") * speed;
         playerRB.velocity = velocity;
+        anim.SetFloat("Speed", Mathf.Abs(playerRB.velocity.x));
 
         //Jump
         if (Input.GetKeyDown(KeyCode.W) && Physics2D.Raycast(groundDetect.transform.position, Vector2.down, groundDistance, jump))
