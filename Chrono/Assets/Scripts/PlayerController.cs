@@ -11,19 +11,18 @@ public class PlayerController : MonoBehaviour
     int jumpForce = 10;
     float groundDistance = 0.5f;
     public LayerMask jump;
+    [SerializeField] float turnSensitivity;
 
     Rigidbody2D playerRB;
     GameManager gameManager;
     public Animator anim;
     public SpriteRenderer sprite;
     public GameObject groundDetect;
-    public GameObject respawn;
 
     void Start()
     {
         playerRB = GetComponent<Rigidbody2D>();
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
-        respawn = gameManager.timeLocations[gameManager.activeTime];
         if (PlayerPrefs.GetInt("flip", 0) == 1)
         {
             sprite.flipX = true;
@@ -33,48 +32,46 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        //animations
         anim.SetFloat("Speed", Mathf.Abs(playerRB.velocity.x));
 
-        //check if moving
-        if (transform.position.x != lastPos.x)
+        if (playerRB.velocity.x > turnSensitivity)
         {
-            if (lastPos.x - transform.position.x < -0.05)
-            {
-                sprite.flipX = false;
-                PlayerPrefs.SetInt("flip", 0);
-            }
-            else if (lastPos.x - transform.position.x > 0.05)
-            {
-                sprite.flipX = true;
-                PlayerPrefs.SetInt("flip", 1);
-            }
+            sprite.flipX = false;
+            PlayerPrefs.SetInt("flip", 0);
         }
-        
+        else if (playerRB.velocity.x < -turnSensitivity)
+        {
+            sprite.flipX = true;
+            PlayerPrefs.SetInt("flip", 1);
+        }
+
         //Move Player
         velocity = playerRB.velocity;
         velocity.x = Input.GetAxisRaw("Horizontal") * speed;
         playerRB.velocity = velocity;
 
-        //Jump only if no interaction
-        if (active == false && Input.GetKeyDown(KeyCode.UpArrow) && Physics2D.Raycast(groundDetect.transform.position, Vector2.down, groundDistance, jump) || active == false && Input.GetKeyDown(KeyCode.W) && Physics2D.Raycast(groundDetect.transform.position, Vector2.down, groundDistance, jump))
+        //Jump
+        if (Input.GetKeyDown(KeyCode.W) && Physics2D.Raycast(groundDetect.transform.position, Vector2.down, groundDistance, jump))
         {
             anim.SetTrigger("Jump");
             playerRB.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
             Debug.Log("Jump");
         }
-    }
 
-    void LateUpdate()
-    {
-        lastPos = transform.position;
+        //Time Travel
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            gameManager.StartCoroutine("TimeTravel");
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        //Interactions
         if (collision.gameObject.tag == "Sappling")
         {
-            active = true;
-            if (gameManager.water == 1 && gameManager.sapplingNum < 3 && Input.GetKey(KeyCode.W) || gameManager.water == 1 && gameManager.sapplingNum < 3 && Input.GetKey(KeyCode.UpArrow))
+            if (gameManager.water == 1 && gameManager.sapplingNum < 3 && Input.GetKey(KeyCode.E))
             {
                 gameManager.sapplingNum++;
                 gameManager.water = 0;
@@ -84,13 +81,12 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.tag == "Key")
         {
-            active = true;
-            if (gameManager.keyCount == 0 && Input.GetKey(KeyCode.W) || gameManager.keyCount == 0 && Input.GetKey(KeyCode.UpArrow))
+            if (gameManager.keyCount == 0 && Input.GetKey(KeyCode.E))
             {
                 gameManager.keyCount++;
                 gameManager.pastKey.SetActive(false);
             }
-            else if (gameManager.keyCount == 1 && Input.GetKey(KeyCode.W) || gameManager.keyCount == 1 && Input.GetKey(KeyCode.UpArrow))
+            else if (gameManager.keyCount == 1 && Input.GetKey(KeyCode.E))
             {
                 gameManager.keyCount++;
                 gameManager.futureKey.SetActive(false);
@@ -100,8 +96,7 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.tag == "Water" && gameManager.waterCan == 1 && gameManager.water == 0)
         {
-            active = true;
-            if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+            if (Input.GetKey(KeyCode.E))
             {
                 gameManager.water++;
                 gameManager.waterIcon.SetActive(true);
@@ -110,8 +105,7 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.tag == "Chest" && gameManager.keyCount == 2)
         {
-            active = true;
-            if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+            if (Input.GetKey(KeyCode.E))
             {
                 gameManager.waterCan = 1;
                 gameManager.chest.SetActive(false);
@@ -121,20 +115,9 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (collision.gameObject.tag == "Time")
-        {
-            gameManager.activeTime = int.Parse(collision.gameObject.name);
-            active = true;
-            if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
-            {
-                gameManager.StartCoroutine("TimeTravel");
-            }
-        }
-
         if (collision.gameObject.tag == "Big Tree")
         {
-            active = true;
-            if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+            if (Input.GetKey(KeyCode.E))
             {
                 gameManager.GameOver();
             }
@@ -142,40 +125,7 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.tag == "Pit")
         {
-            gameObject.transform.position = respawn.transform.position;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Time")
-        {
-            active = false;
-        }
-
-        if (collision.gameObject.tag == "Key")
-        {
-            active = false;
-        }
-
-        if (collision.gameObject.tag == "Chest")
-        {
-            active = false;
-        }
-
-        if (collision.gameObject.tag == "Water")
-        {
-            active = false;
-        }
-
-        if (collision.gameObject.tag == "Sappling")
-        {
-            active = false;
-        }
-
-        if (collision.gameObject.tag == "Time")
-        {
-            active = false;
+            gameObject.transform.position = new Vector2(-60, -22.6f);
         }
     }
 }

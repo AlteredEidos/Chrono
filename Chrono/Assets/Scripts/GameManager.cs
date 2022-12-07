@@ -5,15 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public Vector2 lastPos;
     public int scene;
-    public int activeTime;
     public bool box;
     public int keyCount;
     public int waterCan;
     public int water;
     public int sapplingNum;
 
-    public GameObject[] timeLocations;
     public GameObject pastKey;
     public GameObject futureKey;
     public GameObject chest;
@@ -67,13 +66,13 @@ public class GameManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
-            player.transform.position = timeLocations[activeTime].transform.position;
+            player.transform.position = lastPos;
         }
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S) || (Input.GetKeyDown(KeyCode.DownArrow)))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             EndGame();
         }
@@ -99,7 +98,6 @@ public class GameManager : MonoBehaviour
 
     void Load()
     {
-        activeTime = PlayerPrefs.GetInt("active", 0);
         keyCount = PlayerPrefs.GetInt("key", 0);
         sapplingNum = PlayerPrefs.GetInt("sappling", 0);
         water = PlayerPrefs.GetInt("water", 0);
@@ -108,11 +106,11 @@ public class GameManager : MonoBehaviour
         {
             box = true;
         }
+        lastPos = new Vector2(PlayerPrefs.GetFloat("lastPosX", -60), PlayerPrefs.GetFloat("lastPosY", -22.6f));
     }
 
     void Save()
     {
-        PlayerPrefs.SetInt("active", activeTime);
         PlayerPrefs.SetInt("key", keyCount);
         PlayerPrefs.SetInt("sappling", sapplingNum);
         PlayerPrefs.SetInt("water", water);
@@ -120,6 +118,12 @@ public class GameManager : MonoBehaviour
         if (box == true)
         {
             PlayerPrefs.SetInt("box", 1);
+        }
+        if (player != null)
+        {
+            lastPos = player.transform.position;
+            PlayerPrefs.SetFloat("lastPosX", lastPos.x);
+            PlayerPrefs.SetFloat("lastPosY", lastPos.y);
         }
     }
 
@@ -151,12 +155,13 @@ public class GameManager : MonoBehaviour
 
     public void NewGame()
     {
-        PlayerPrefs.SetInt("active", 0);
         PlayerPrefs.SetInt("box", 0);
         PlayerPrefs.SetInt("key", 0);
         PlayerPrefs.SetInt("sappling", 0);
         PlayerPrefs.SetInt("water", 0);
         PlayerPrefs.SetInt("waterCan", 0);
+        PlayerPrefs.SetFloat("lastPosX", -60);
+        PlayerPrefs.SetFloat("lastPosY", -22.6f);
         StartCoroutine("New");
     }
 
