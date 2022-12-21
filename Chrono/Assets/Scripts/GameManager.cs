@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public int water;
     public int sapplingNum;
 
+    MasterManager master;
     public GameObject pastKey;
     public GameObject futureKey;
     public GameObject chest;
@@ -21,13 +22,19 @@ public class GameManager : MonoBehaviour
     public GameObject keyIcon;
     public GameObject waterIcon;
     public GameObject canIcon;
-    public GameObject music;
+    public GameObject iconPlate;
     GameObject player;
     public Animator transition;
 
     void Start()
     {
-        Load();
+        master = GameObject.FindGameObjectWithTag("Master").GetComponent<MasterManager>();
+        keyCount = master.keyCount;
+        sapplingNum = master.sapplingNum;
+        water = master.water;
+        waterCan = master.waterCan;
+        box = master.box;
+        lastPos = master.lastPos;
         scene = SceneManager.GetActiveScene().buildIndex;
         if (keyCount != 0 && scene == 1)
         {
@@ -48,6 +55,8 @@ public class GameManager : MonoBehaviour
         }
         if (scene != 0 && scene != 3 && scene != 4)
         {
+            iconPlate.SetActive(true);
+
             if (water == 1)
             {
                 waterIcon.SetActive(true);
@@ -84,46 +93,28 @@ public class GameManager : MonoBehaviour
         {
             transition.SetTrigger("Start");
             Save();
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.5f);
             SceneManager.LoadScene(1);
         }
         else
         {
             transition.SetTrigger("Start");
             Save();
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.5f);
             SceneManager.LoadScene(2);
         }
     }
 
-    void Load()
+    public void Save()
     {
-        keyCount = PlayerPrefs.GetInt("key", 0);
-        sapplingNum = PlayerPrefs.GetInt("sappling", 0);
-        water = PlayerPrefs.GetInt("water", 0);
-        waterCan = PlayerPrefs.GetInt("waterCan", 0);
-        if (PlayerPrefs.GetInt("box", 0) == 1)
-        {
-            box = true;
-        }
-        lastPos = new Vector2(PlayerPrefs.GetFloat("lastPosX", -60), PlayerPrefs.GetFloat("lastPosY", -22.6f));
-    }
-
-    void Save()
-    {
-        PlayerPrefs.SetInt("key", keyCount);
-        PlayerPrefs.SetInt("sappling", sapplingNum);
-        PlayerPrefs.SetInt("water", water);
-        PlayerPrefs.SetInt("waterCan", waterCan);
-        if (box == true)
-        {
-            PlayerPrefs.SetInt("box", 1);
-        }
+        master.keyCount = keyCount;
+        master.sapplingNum = sapplingNum;
+        master.water = water;
+        master.waterCan = waterCan;
+        master.box = box;
         if (player != null)
         {
-            lastPos = player.transform.position;
-            PlayerPrefs.SetFloat("lastPosX", lastPos.x);
-            PlayerPrefs.SetFloat("lastPosY", lastPos.y);
+            master.lastPos = player.transform.position;
         }
     }
 
