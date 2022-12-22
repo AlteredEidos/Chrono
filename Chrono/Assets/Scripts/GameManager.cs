@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     public int waterCan;
     public int water;
     public int sapplingNum;
+    float loadTime = 0.5f;
+    bool newGame;
 
     MasterManager master;
     public GameObject pastKey;
@@ -93,14 +95,14 @@ public class GameManager : MonoBehaviour
         {
             transition.SetTrigger("Start");
             Save();
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(loadTime);
             SceneManager.LoadScene(1);
         }
         else
         {
             transition.SetTrigger("Start");
             Save();
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(loadTime);
             SceneManager.LoadScene(2);
         }
     }
@@ -127,7 +129,7 @@ public class GameManager : MonoBehaviour
     IEnumerator Game()
     {
         transition.SetTrigger("Start");
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(loadTime);
         SceneManager.LoadScene(2);
     }
 
@@ -140,26 +142,24 @@ public class GameManager : MonoBehaviour
     IEnumerator End()
     {
         transition.SetTrigger("Start");
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(loadTime);
         SceneManager.LoadScene(0);
     }
 
     public void NewGame()
     {
-        PlayerPrefs.SetInt("box", 0);
-        PlayerPrefs.SetInt("key", 0);
-        PlayerPrefs.SetInt("sappling", 0);
-        PlayerPrefs.SetInt("water", 0);
-        PlayerPrefs.SetInt("waterCan", 0);
-        PlayerPrefs.SetFloat("lastPosX", -60);
-        PlayerPrefs.SetFloat("lastPosY", -22.6f);
+        master.box = false;
+        master.sapplingNum = 0;
+        master.waterCan = 0;
+        master.water = 0;
+        master.lastPos = new Vector2(-60, -22.6f);
         StartCoroutine("New");
     }
 
     IEnumerator New()
     {
         transition.SetTrigger("Start");
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(loadTime);
         SceneManager.LoadScene(2);
     }
 
@@ -171,7 +171,7 @@ public class GameManager : MonoBehaviour
     IEnumerator Over()
     {
         transition.SetTrigger("Start");
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(loadTime);
         SceneManager.LoadScene(3);
     }
 
@@ -180,7 +180,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("ending");
         yield return new WaitForSeconds(7);
         transition.SetTrigger("Start");
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(loadTime);
         SceneManager.LoadScene(4);
     }
 }

@@ -11693,6 +11693,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MasterManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7077014496579819418, guid: c1c46a240213d4241b2e2844bf3647a1, type: 3}
+      propertyPath: m_Volume
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7077014496579819421, guid: c1c46a240213d4241b2e2844bf3647a1, type: 3}
       propertyPath: m_RootOrder
       value: 13
